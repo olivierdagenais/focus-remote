@@ -28,9 +28,13 @@ func main() {
 	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "There is nothing interesting here, yet!")
 		if !local {
+			fmt.Fprintf(w, "<br />")
 			userId := r.Header.Get("X-Replit-User-Id")
 			if len(userId) > 0 {
-				fmt.Fprintf(w, "<br /> You have been identified as Replit user %s", userId)
+				fmt.Fprintf(w, "You have been identified as Replit user %s", userId)
+			} else {
+				fmt.Fprintf(w, "Please log in")
+				fmt.Fprint(w, "<div>\n<script authed=\"location.reload()\" src=\"https://auth.util.repl.co/script.js\"></script>\n</div")
 			}
 		}
 	})
